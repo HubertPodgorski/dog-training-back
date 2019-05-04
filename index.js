@@ -18,7 +18,8 @@ const app = express();
 // Set up a whitelist and check against it:
 const whitelist = [
     'http://localhost:3000',
-    'https://mystifying-jepsen-f3d5b0.netlify.com'
+    'https://mystifying-jepsen-f3d5b0.netlify.com',
+    'https://dog-training-back.herokuapp.com'
 ];
 const corsOptions = {
     origin: (origin, callback) => {
