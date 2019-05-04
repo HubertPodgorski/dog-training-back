@@ -23,17 +23,20 @@ const dogsInTraining = [
     },
     {
         dogName: 'Costa'
-    },
-    {
-        dogName: 'Enter'
     }
 ];
 
 async function setDogsTrainingFixtures() {
-    for (const dogInTraining of dogsInTraining) {
+    const dogListWithOrder = dogsInTraining.map((dogInTraining, index) => ({
+        dogName: dogInTraining.dogName,
+        order: index
+    }));
+
+    for (const dogInTraining of dogListWithOrder) {
         try {
             await DogTraining.create({
-                dogName: dogInTraining.dogName
+                dogName: dogInTraining.dogName,
+                order: dogInTraining.order
             });
             console.log(
                 `Created dog fixture with name: ${dogInTraining.dogName}`

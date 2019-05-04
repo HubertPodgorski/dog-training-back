@@ -12,6 +12,10 @@ const DogTrainingSchema = new Schema({
     trainingDescription: {
         type: String,
         default: ''
+    },
+    order: {
+        type: Number,
+        required: [true, 'Order of dog has to be provided']
     }
 });
 
