@@ -64,9 +64,18 @@ router.put(routes.put.updateOrder, async (req, res) => {
     }
 });
 
-// router.put(routes.put.updatePeopleData, (req, res) => {
-//     res.end();
-// });
+router.put(routes.put.updatePeopleData, async (req, res) => {
+    try {
+        const response = await DogTraining.updateOne(
+            { _id: req.params.id },
+            { $set: { trainingDescription: req.body.trainingDescription } }
+        );
+
+        res.send(response).status(200);
+    } catch (error) {
+        res.send(error).status(500);
+    }
+});
 
 // router.put(routes.put.updateDogTasks, (req, res) => {
 //     res.end();
