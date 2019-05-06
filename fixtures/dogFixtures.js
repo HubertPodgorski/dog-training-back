@@ -23,6 +23,30 @@ const dogsInTraining = [
     },
     {
         dogName: 'Costa'
+    },
+    {
+        dogName: 'Wafel'
+    },
+    {
+        dogName: 'Ganta'
+    },
+    {
+        dogName: 'Kodi duży'
+    },
+    {
+        dogName: 'Lani'
+    },
+    {
+        dogName: 'Kodi mały'
+    },
+    {
+        dogName: 'Edi'
+    },
+    {
+        dogName: 'Łajka'
+    },
+    {
+        dogName: 'Wega'
     }
 ];
 

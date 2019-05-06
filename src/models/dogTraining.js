@@ -39,6 +39,10 @@ const DogTrainingSchema = new Schema({
     peopleTasks: {
         type: [PersonTaskSchema],
         default: []
+    },
+    isDisabled: {
+        type: Boolean,
+        default: false
     }
 });
 

@@ -17,7 +17,8 @@ const routes = {
         updateOrder: '/training-dogs/order',
         updateTrainingDescription: '/training-dogs/:id/training-description',
         updatePeopleTasks: '/training-dogs/:id/people-tasks',
-        updateDogTasks: '/training-dogs/:id/dog-tasks'
+        updateDogTasks: '/training-dogs/:id/dog-tasks',
+        updateDogDisability: '/training-dogs/:id/dog-disability'
     }
 };
 
@@ -35,7 +36,8 @@ router.get(routes.get.trainingDogs, (req, res) => {
                     uuid: personTask.uuid,
                     personId: personTask.personId,
                     taskId: personTask.taskId
-                }))
+                })),
+                isDisabled: dogTraining.isDisabled || false
             }))
             .sort((a, b) => a.order - b.order);
 
@@ -102,6 +104,19 @@ router.put(routes.put.updateDogTasks, async (req, res) => {
         const response = await DogTraining.updateOne(
             { _id: req.params.id },
             { $set: { dogTasks: req.body.dogTasks } }
+        );
+
+        res.send(response).status(200);
+    } catch (error) {
+        res.send(error).status(500);
+    }
+});
+
+router.put(routes.put.updateDogDisability, async (req, res) => {
+    try {
+        const response = await DogTraining.updateOne(
+            { _id: req.params.id },
+            { $set: { isDisabled: req.body.isDisabled } }
         );
 
         res.send(response).status(200);
