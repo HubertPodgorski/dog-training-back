@@ -15,8 +15,9 @@ const routes = {
     put: {
         trainingDogs: '/training-dogs/:id',
         updateOrder: '/training-dogs/order',
-        updatePeopleData: '/training-dogs/:id/people-data',
-        updateDogTasks: '/training-dogs/:id/tasks'
+        updateTrainingDescription: '/training-dogs/:id/training-description',
+        updatePeopleTasks: '/training-dogs/:id/people-tasks',
+        updateDogTasks: '/training-dogs/:id/dog-tasks'
     }
 };
 
@@ -28,7 +29,13 @@ router.get(routes.get.trainingDogs, (req, res) => {
                 id: dogTraining.id,
                 dogName: dogTraining.dogName,
                 trainingDescription: dogTraining.trainingDescription || '',
-                order: dogTraining.order
+                order: dogTraining.order,
+                dogTasks: dogTraining.dogTasks || [],
+                peopleTasks: dogTraining.peopleTasks.map(personTask => ({
+                    uuid: personTask.uuid,
+                    personId: personTask.personId,
+                    taskId: personTask.taskId
+                }))
             }))
             .sort((a, b) => a.order - b.order);
 
@@ -64,7 +71,7 @@ router.put(routes.put.updateOrder, async (req, res) => {
     }
 });
 
-router.put(routes.put.updatePeopleData, async (req, res) => {
+router.put(routes.put.updateTrainingDescription, async (req, res) => {
     try {
         const response = await DogTraining.updateOne(
             { _id: req.params.id },
@@ -77,13 +84,30 @@ router.put(routes.put.updatePeopleData, async (req, res) => {
     }
 });
 
-// router.put(routes.put.updateDogTasks, (req, res) => {
-//     res.end();
-// });
+router.put(routes.put.updatePeopleTasks, async (req, res) => {
+    try {
+        const response = await DogTraining.updateOne(
+            { _id: req.params.id },
+            { $set: { peopleTasks: req.body.peopleTasks } }
+        );
 
-// // delete dog from training / ID
-// router.delete(routes.delete.trainingDogs, (req, res) => {
-//     res.end();
-// });
+        res.send(response).status(200);
+    } catch (error) {
+        res.send(error).status(500);
+    }
+});
+
+router.put(routes.put.updateDogTasks, async (req, res) => {
+    try {
+        const response = await DogTraining.updateOne(
+            { _id: req.params.id },
+            { $set: { dogTasks: req.body.dogTasks } }
+        );
+
+        res.send(response).status(200);
+    } catch (error) {
+        res.send(error).status(500);
+    }
+});
 
 module.exports = router;
