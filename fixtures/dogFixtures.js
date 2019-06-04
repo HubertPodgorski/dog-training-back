@@ -50,6 +50,9 @@ const dogsInTraining = [
     },
     {
         dogName: 'Avar'
+    },
+    {
+        dogName: 'Kadarka'
     }
 ];
 
