@@ -31,13 +31,13 @@ const dogsInTraining = [
         dogName: 'Ganta'
     },
     {
-        dogName: 'Kodi duży'
+        dogName: 'Cody duży'
     },
     {
         dogName: 'Lani'
     },
     {
-        dogName: 'Kodi mały'
+        dogName: 'Cody mały'
     },
     {
         dogName: 'Edi'
@@ -53,6 +53,9 @@ const dogsInTraining = [
     },
     {
         dogName: 'Kadarka'
+    },
+    {
+        dogName: 'Lucy'
     }
 ];
 
