@@ -1,5 +1,7 @@
-const dogTraining = require('./dogTraining');
+const dogTraining = require('./task');
+const resources = require('./resources');
 
 module.exports = {
-    dogTraining
+    dogTraining,
+    resources
 };

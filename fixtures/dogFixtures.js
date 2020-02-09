@@ -1,79 +1,69 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const DogTraining = require('../src/models/dogTraining');
+const Dog = require('../src/models/dog');
 
-const dbUrl = `mongodb://${process.env.DB_USER}:${
-    process.env.DB_PASS
-}@ds149596.mlab.com:49596/dog-training`;
+const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds149596.mlab.com:49596/dog-training`;
 
 mongoose.connect(dbUrl);
 
-const dogsInTraining = [
+const dogs = [
     {
-        dogName: 'Enter'
+        name: 'Enter'
     },
     {
-        dogName: 'Maffin'
+        name: 'Maffin'
     },
     {
-        dogName: 'Codi'
+        name: 'Codi'
     },
     {
-        dogName: 'Erni'
+        name: 'Erni'
     },
     {
-        dogName: 'Costa'
+        name: 'Costa'
     },
     {
-        dogName: 'Wafel'
+        name: 'Wafel'
     },
     {
-        dogName: 'Ganta'
+        name: 'Ganta'
     },
     {
-        dogName: 'Cody duży'
+        name: 'Cody duży'
     },
     {
-        dogName: 'Lani'
+        name: 'Lani'
     },
     {
-        dogName: 'Cody mały'
+        name: 'Cody mały'
     },
     {
-        dogName: 'Edi'
+        name: 'Edi'
     },
     {
-        dogName: 'Łajka'
+        name: 'Łajka'
     },
     {
-        dogName: 'Wega'
+        name: 'Wega'
     },
     {
-        dogName: 'Avar'
+        name: 'Avar'
     },
     {
-        dogName: 'Kadarka'
+        name: 'Kadarka'
     },
     {
-        dogName: 'Lucy'
+        name: 'Lucy'
     }
 ];
 
-async function setDogsTrainingFixtures() {
-    const dogListWithOrder = dogsInTraining.map((dogInTraining, index) => ({
-        dogName: dogInTraining.dogName,
-        order: index
-    }));
-
-    for (const dogInTraining of dogListWithOrder) {
+async function setDogsFixtures() {
+    for (const dog of dogs) {
         try {
-            await DogTraining.create({
-                dogName: dogInTraining.dogName,
-                order: dogInTraining.order
+            await Dog.model.create({
+                name: dog.name
             });
-            console.log(
-                `Created dog fixture with name: ${dogInTraining.dogName}`
-            );
+            console.log(`Created dog fixture with name: ${dog.name}`);
         } catch (error) {
             console.error(error.errmsg);
         }
@@ -83,4 +73,4 @@ async function setDogsTrainingFixtures() {
     process.exit();
 }
 
-setDogsTrainingFixtures();
+setDogsFixtures();

@@ -28,8 +28,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const apiPrefix = '/api';
+const resourcesPrefix = '/resources';
 app.use(bodyParser.json());
 app.use(`${apiPrefix}`, routers.dogTraining);
+app.use(`${resourcesPrefix}`, routers.resources);
 
 // setup port
 app.listen(process.env.PORT || 3001, () => {
