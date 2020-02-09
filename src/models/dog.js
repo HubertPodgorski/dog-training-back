@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const DogSchema = new Schema({
-    dogName: {
+    name: {
         type: String,
         required: [true, 'Dog name field is required'],
         unique: true,

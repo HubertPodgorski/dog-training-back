@@ -49,15 +49,37 @@ router.get(routes.get.tasks, (req, res) => {
 });
 
 // add task
-// router.post(routes.post.tasks, (req, res) => {
-//     res.end();
-// });
+router.post(routes.post.tasks, (req, res) => {
+    try {
+        const response = Task.model.create({
+            order: req.body.order
+        });
+
+        res.send(response).status(200);
+    } catch (error) {
+        res.send(error).status(500);
+    }
+});
 
 // delete task
-// router.delete(routes.delete.tasks, (req, res) => {
+router.delete(routes.delete.tasks, (req, res) => {
+    try {
+        Task.model.deleteOne({ _id: req.params.id }, callback => {
+            if (callback) {
+                res.send(callback).status(400);
+            }
+
+            res.send({}).status(200);
+        });
+    } catch (error) {
+        res.send(error).status(500);
+    }
+});
+
+// update whole task
+// router.put(routes.put.tasks, (req, res) => {
 //     res.end();
 // });
-
 
 // update task order
 router.put(routes.put.updateOrder, async (req, res) => {

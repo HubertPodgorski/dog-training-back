@@ -35,9 +35,6 @@ const people = [
         name: 'Kamila'
     },
     {
-        name: 'Maga'
-    },
-    {
         name: 'Ola'
     },
     {

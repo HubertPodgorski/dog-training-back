@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 const PersonTaskSchema = new Schema({
     name: {
         type: String,
-        required: [true, 'Person task name has to be provided']
+        required: [true, 'Person task name has to be provided'],
+        unique: true,
+        dropDups: true
     },
 });
 

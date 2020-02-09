@@ -67,7 +67,7 @@ router.get(routes.get.peopleTasks, (req, res) => {
     });
 });
 
-router.get(routes.get.all, (req, res) => {
+router.get(routes.get.all, async (req, res) => {
     let allResources = {
         dogs: [],
         dogTasks: [],
@@ -75,7 +75,7 @@ router.get(routes.get.all, (req, res) => {
         peopleTasks: []
     };
 
-    Dog.model.find({}, (err, dogs) => {
+    await Dog.model.find({}, (err, dogs) => {
         const mappedDogs = dogs.map(dog => ({
             id: dog.id,
             name: dog.name
@@ -86,7 +86,7 @@ router.get(routes.get.all, (req, res) => {
         allResources.dogs = mappedDogs;
     });
 
-    DogTask.model.find({}, (err, dogTasks) => {
+    await DogTask.model.find({}, (err, dogTasks) => {
         const mappedDogTasks = dogTasks.map(dogTask => ({
             id: dogTask.id,
             name: dogTask.name
@@ -97,7 +97,7 @@ router.get(routes.get.all, (req, res) => {
         allResources.dogTasks = mappedDogTasks;
     });
 
-    Person.model.find({}, (err, people) => {
+    await Person.model.find({}, (err, people) => {
         const mappedPeople = people.map(person => ({
             id: person.id,
             name: person.name
@@ -108,7 +108,7 @@ router.get(routes.get.all, (req, res) => {
         allResources.people = mappedPeople;
     });
 
-    PersonTask.model.find({}, (err, people) => {
+    await PersonTask.model.find({}, (err, people) => {
         const mappedPeopleTasks = people.map(person => ({
             id: person.id,
             name: person.name
