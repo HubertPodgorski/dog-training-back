@@ -9,6 +9,6 @@ const PersonTaskSchema = new Schema({
     },
 });
 
-const PersonTask = mongoose.model('personAndTask', PersonTaskSchema);
+const PersonTask = mongoose.model('personTask', PersonTaskSchema);
 
 module.exports = {model: PersonTask, schema: PersonTaskSchema};

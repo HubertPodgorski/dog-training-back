@@ -49,7 +49,12 @@ router.get(routes.get.tasks, (req, res) => {
 });
 
 // add task
-// router.post(routes.post.trainingDogs, (req, res) => {
+// router.post(routes.post.tasks, (req, res) => {
+//     res.end();
+// });
+
+// delete task
+// router.delete(routes.delete.tasks, (req, res) => {
 //     res.end();
 // });
 
