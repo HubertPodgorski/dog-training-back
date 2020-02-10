@@ -28,10 +28,14 @@ router.get(routes.get.tasks, (req, res) => {
         const mappedTasks = tasks
             .map(task => ({
                 id: task.id,
-                dogs: task.dogs,
+                dogs: task.dogs.map(dog => ({ name: dog.name, id: dog.id })),
                 description: task.description || '',
                 order: task.order,
-                tasks: task.tasks || [],
+                tasks:
+                    task.tasks.map(task => ({
+                        id: task.id,
+                        name: task.name
+                    })) || [],
                 peopleTasks: task.peopleTasks.map(personTask => ({
                     uuid: personTask.uuid,
                     personId: personTask.personId,
@@ -118,20 +122,14 @@ router.put(routes.put.updateTaskDogs, async (req, res) => {
     try {
         const response = await Task.model.updateOne(
             { _id: req.params.id },
-            { $set: { dogs: req.body.dogs } }
-        );
-
-        res.send(response).status(200);
-    } catch (error) {
-        res.send(error).status(500);
-    }
-});
-
-router.put(routes.put.updatePeopleTasks, async (req, res) => {
-    try {
-        const response = await Task.model.updateOne(
-            { _id: req.params.id },
-            { $set: { peopleTasks: req.body.peopleTasks } }
+            {
+                $set: {
+                    dogs: req.body.dogs.map(dog => ({
+                        name: dog.name,
+                        _id: dog.id
+                    }))
+                }
+            }
         );
 
         res.send(response).status(200);
@@ -144,7 +142,34 @@ router.put(routes.put.updateDogTasks, async (req, res) => {
     try {
         const response = await Task.model.updateOne(
             { _id: req.params.id },
-            { $set: { tasks: req.body.tasks } }
+            {
+                $set: {
+                    tasks: req.body.tasks.map(task => ({
+                        _id: task.id,
+                        name: task.name
+                    }))
+                }
+            }
+        );
+
+        res.send(response).status(200);
+    } catch (error) {
+        res.send(error).status(500);
+    }
+});
+
+router.put(routes.put.updatePeopleTasks, async (req, res) => {
+    try {
+        const response = await Task.model.updateOne(
+            { _id: req.params.id },
+            {
+                $set: {
+                    peopleTasks: req.body.peopleTasks.map(personTask => ({
+                        ...personTask,
+                        _id: personTask.id
+                    }))
+                }
+            }
         );
 
         res.send(response).status(200);
