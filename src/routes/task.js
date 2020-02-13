@@ -55,8 +55,13 @@ router.get(routes.get.tasks, (req, res) => {
 // add task
 router.post(routes.post.tasks, (req, res) => {
     try {
+        const { dogs, description, order, tasks, peopleTasks } = req.body;
         const response = Task.model.create({
-            order: req.body.order
+            dogs: dogs || [],
+            description: description || '',
+            order: order,
+            tasks: tasks || [],
+            peopleTasks: peopleTasks || []
         });
 
         res.send(response).status(200);

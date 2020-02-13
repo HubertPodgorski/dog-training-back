@@ -8,7 +8,14 @@ const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
     dogs: {
-        type: [Dog.schema],
+        type: [
+            new Schema({
+                name: {
+                    type: String,
+                    required: [true, 'Dog name field is required']
+                }
+            })
+        ],
         default: []
     },
     description: {
@@ -20,15 +27,45 @@ const TaskSchema = new Schema({
         required: [true, 'Order of dog has to be provided']
     },
     tasks: {
-        type: [DogTask.schema],
+        type: [
+            new Schema({
+                name: {
+                    type: String,
+                    required: [true, 'Dog task name field is required']
+                }
+            })
+        ],
         default: []
     },
     peopleTasks: {
-        type: [PersonAndTask.schema],
+        type: [
+            new Schema({
+                uuid: {
+                    type: String,
+                    required: [true, 'Uuid has to be provided']
+                },
+                personId: {
+                    type: String,
+                    required: [true, 'Person id has to be provided']
+                },
+                taskId: {
+                    type: String,
+                    required: [true, 'Task id has to be provided']
+                },
+                taskName: {
+                    type: String,
+                    required: [true, 'Task name has to be provided']
+                },
+                personName: {
+                    type: String,
+                    required: [true, 'Person name has to be provided']
+                }
+            })
+        ],
         default: []
     }
 });
 
 const Task = mongoose.model('task', TaskSchema);
 
-module.exports = {model: Task};
+module.exports = { model: Task };
