@@ -50,10 +50,13 @@ const dogs = [
         name: 'Avar'
     },
     {
-        name: 'Kadarka'
+        name: 'Cleo'
     },
     {
         name: 'Lucy'
+    },
+    {
+        name: 'Winter'
     }
 ];
 
