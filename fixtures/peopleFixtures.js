@@ -8,55 +8,47 @@ mongoose.connect(dbUrl);
 
 const people = [
     {
-        name: 'Sebastian'
+        name: 'Sebastian',
     },
     {
-        name: 'Hubert'
+        name: 'Hubert',
     },
     {
-        name: 'Paulina'
+        name: 'Paulina',
     },
     {
-        name: 'Agnieszka'
+        name: 'Agnieszka',
     },
     {
-        name: 'Ania'
+        name: 'Ania',
     },
     {
-        name: 'Marta'
+        name: 'Marta',
     },
     {
-        name: 'Maga'
+        name: 'Maga',
     },
     {
-        name: 'Jagoda'
+        name: 'Kamila',
     },
     {
-        name: 'Kamila'
+        name: 'Ola',
     },
     {
-        name: 'Ola'
+        name: 'Mati',
     },
     {
-        name: 'Mati'
+        name: 'Julia',
     },
-    {
-        name: 'Żaneta'
-    },
-    {
-        name: 'Agnieszka I'
-    }
 ];
 
 async function setPeopleFixtures() {
     for (const person of people) {
         try {
             await Person.model.create({
-                name: person.name
+                name: person.name,
             });
-            console.log(
-                `Created person fixture with name: ${person.name}`
-            );
+            console.log(`Created person fixture with name: ${person.name}`);
         } catch (error) {
             console.error(error.errmsg);
         }

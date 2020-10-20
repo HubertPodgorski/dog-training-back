@@ -8,63 +8,51 @@ mongoose.connect(dbUrl);
 
 const dogs = [
     {
-        name: 'Enter'
+        name: 'Enter',
     },
     {
-        name: 'Maffin'
+        name: 'Maffin',
     },
     {
-        name: 'Codi'
+        name: 'Erni',
     },
     {
-        name: 'Erni'
+        name: 'Wafel',
     },
     {
-        name: 'Costa'
+        name: 'Cody duży',
     },
     {
-        name: 'Wafel'
+        name: 'Lani',
     },
     {
-        name: 'Ganta'
+        name: 'Cody mały',
     },
     {
-        name: 'Cody duży'
+        name: 'Edi',
     },
     {
-        name: 'Lani'
+        name: 'Wega',
     },
     {
-        name: 'Cody mały'
+        name: 'Cleo',
     },
     {
-        name: 'Edi'
+        name: 'Lucy',
     },
     {
-        name: 'Łajka'
+        name: 'Winter',
     },
     {
-        name: 'Wega'
+        name: 'Eliza',
     },
-    {
-        name: 'Avar'
-    },
-    {
-        name: 'Cleo'
-    },
-    {
-        name: 'Lucy'
-    },
-    {
-        name: 'Winter'
-    }
 ];
 
 async function setDogsFixtures() {
     for (const dog of dogs) {
         try {
             await Dog.model.create({
-                name: dog.name
+                name: dog.name,
             });
             console.log(`Created dog fixture with name: ${dog.name}`);
         } catch (error) {
