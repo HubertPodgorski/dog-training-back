@@ -46,6 +46,9 @@ const dogs = [
     {
         name: 'Eliza',
     },
+    {
+        name: 'Nero',
+    },
 ];
 
 async function setDogsFixtures() {
