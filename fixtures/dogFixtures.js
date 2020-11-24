@@ -29,9 +29,6 @@ const dogs = [
         name: 'Cody mały',
     },
     {
-        name: 'Edi',
-    },
-    {
         name: 'Wega',
     },
     {
@@ -48,6 +45,12 @@ const dogs = [
     },
     {
         name: 'Nero',
+    },
+    {
+        name: 'Orion',
+    },
+    {
+        name: 'Lulu',
     },
 ];
 
