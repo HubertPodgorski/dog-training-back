@@ -8,40 +8,44 @@ mongoose.connect(dbUrl);
 
 const dogTasks = [
     {
-        name: 'Box'
+        name: 'Box',
     },
     {
-        name: 'Recall'
+        name: 'Recall',
     },
     {
-        name: 'Ball possession'
+        name: 'Ball possession',
     },
     {
-        name: 'Ściana'
+        name: 'Ściana',
     },
     {
-        name: 'Aport'
+        name: 'Aport',
     },
     {
-        name: 'Aport przez hopki'
+        name: 'Aport przez hopki',
     },
     {
-        name: 'Power jumping'
+        name: 'Power jumping',
     },
     {
-        name: 'Crossy'
-    }
+        name: 'Crossy',
+    },
+    {
+        name: 'Ściganko - tor lewy',
+    },
+    {
+        name: 'Ściganko - tor prawy',
+    },
 ];
 
 async function setDogTasksFixtures() {
     for (const dogTask of dogTasks) {
         try {
             await DogTask.model.create({
-                name: dogTask.name
+                name: dogTask.name,
             });
-            console.log(
-                `Created dog task fixture with name: ${dogTask.name}`
-            );
+            console.log(`Created dog task fixture with name: ${dogTask.name}`);
         } catch (error) {
             console.error(error.errmsg);
         }

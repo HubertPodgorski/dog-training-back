@@ -12,58 +12,62 @@ const TaskSchema = new Schema({
             new Schema({
                 name: {
                     type: String,
-                    required: [true, 'Dog name field is required']
-                }
-            })
+                    required: [true, 'Dog name field is required'],
+                },
+            }),
         ],
-        default: []
+        default: [],
     },
     description: {
         type: String,
-        default: ''
+        default: '',
     },
     order: {
         type: Number,
-        required: [true, 'Order of dog has to be provided']
+        required: [true, 'Order of dog has to be provided'],
     },
     tasks: {
         type: [
             new Schema({
                 name: {
                     type: String,
-                    required: [true, 'Dog task name field is required']
-                }
-            })
+                    required: [true, 'Dog task name field is required'],
+                },
+            }),
         ],
-        default: []
+        default: [],
     },
     peopleTasks: {
         type: [
             new Schema({
                 uuid: {
                     type: String,
-                    required: [true, 'Uuid has to be provided']
+                    required: [true, 'Uuid has to be provided'],
                 },
                 personId: {
                     type: String,
-                    required: [true, 'Person id has to be provided']
+                    required: [true, 'Person id has to be provided'],
                 },
                 taskId: {
                     type: String,
-                    required: [true, 'Task id has to be provided']
+                    required: [true, 'Task id has to be provided'],
                 },
                 taskName: {
                     type: String,
-                    required: [true, 'Task name has to be provided']
+                    required: [true, 'Task name has to be provided'],
                 },
                 personName: {
                     type: String,
-                    required: [true, 'Person name has to be provided']
-                }
-            })
+                    required: [true, 'Person name has to be provided'],
+                },
+            }),
         ],
-        default: []
-    }
+        default: [],
+    },
+    column: {
+        type: String,
+        default: 'left',
+    },
 });
 
 const Task = mongoose.model('task', TaskSchema);

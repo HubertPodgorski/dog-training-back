@@ -20,6 +20,7 @@ const routes = {
         updatePeopleTasks: '/tasks/:id/people-tasks',
         updateDogTasks: '/tasks/:id/dog-tasks',
         updateTaskOrder: '/tasks/:id/order',
+        updateTaskColumn: '/tasks/:id/column',
     },
 };
 
@@ -44,6 +45,7 @@ router.get(routes.get.tasks, (req, res) => {
                     personName: personTask.personName,
                     taskName: personTask.taskName,
                 })),
+                column: task.column,
             }))
             .sort((a, b) => a.order - b.order);
 
@@ -63,6 +65,7 @@ router.post(routes.post.tasks, (req, res) => {
             order: order,
             tasks: tasks || [],
             peopleTasks: peopleTasks || [],
+            column: 'left',
         });
 
         res.send(response).status(200);
@@ -191,6 +194,23 @@ router.put(routes.put.updateTaskOrder, async (req, res) => {
             {
                 $set: {
                     order: +req.body.order,
+                },
+            }
+        );
+
+        res.send(response).status(200);
+    } catch (error) {
+        res.send(error).status(500);
+    }
+});
+
+router.put(routes.put.updateTaskColumn, async (req, res) => {
+    try {
+        const response = await Task.model.updateOne(
+            { _id: req.params.id },
+            {
+                $set: {
+                    column: req.body.column,
                 },
             }
         );
