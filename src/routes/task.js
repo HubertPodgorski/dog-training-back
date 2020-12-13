@@ -4,13 +4,13 @@ const Task = require('../models/task');
 
 const routes = {
     get: {
-        tasks: '/tasks'
+        tasks: '/tasks',
     },
     delete: {
-        tasks: '/tasks/:id'
+        tasks: '/tasks/:id',
     },
     post: {
-        tasks: '/tasks'
+        tasks: '/tasks',
     },
     put: {
         tasks: '/tasks/:id',
@@ -18,31 +18,32 @@ const routes = {
         updateTaskDogs: '/tasks/:id/dogs',
         updateTaskDescription: '/tasks/:id/description',
         updatePeopleTasks: '/tasks/:id/people-tasks',
-        updateDogTasks: '/tasks/:id/dog-tasks'
-    }
+        updateDogTasks: '/tasks/:id/dog-tasks',
+        updateTaskOrder: '/tasks/:id/order',
+    },
 };
 
 // get list of tasks
 router.get(routes.get.tasks, (req, res) => {
     Task.model.find({}, (err, tasks) => {
         const mappedTasks = tasks
-            .map(task => ({
+            .map((task) => ({
                 id: task.id,
-                dogs: task.dogs.map(dog => ({ name: dog.name, id: dog.id })),
+                dogs: task.dogs.map((dog) => ({ name: dog.name, id: dog.id })),
                 description: task.description || '',
                 order: task.order,
                 tasks:
-                    task.tasks.map(task => ({
+                    task.tasks.map((task) => ({
                         id: task.id,
-                        name: task.name
+                        name: task.name,
                     })) || [],
-                peopleTasks: task.peopleTasks.map(personTask => ({
+                peopleTasks: task.peopleTasks.map((personTask) => ({
                     uuid: personTask.uuid,
                     personId: personTask.personId,
                     taskId: personTask.taskId,
                     personName: personTask.personName,
-                    taskName: personTask.taskName
-                }))
+                    taskName: personTask.taskName,
+                })),
             }))
             .sort((a, b) => a.order - b.order);
 
@@ -61,7 +62,7 @@ router.post(routes.post.tasks, (req, res) => {
             description: description || '',
             order: order,
             tasks: tasks || [],
-            peopleTasks: peopleTasks || []
+            peopleTasks: peopleTasks || [],
         });
 
         res.send(response).status(200);
@@ -73,7 +74,7 @@ router.post(routes.post.tasks, (req, res) => {
 // delete task
 router.delete(routes.delete.tasks, (req, res) => {
     try {
-        Task.model.deleteOne({ _id: req.params.id }, callback => {
+        Task.model.deleteOne({ _id: req.params.id }, (callback) => {
             if (callback) {
                 res.send(callback).status(400);
             }
@@ -92,7 +93,7 @@ router.delete(routes.delete.tasks, (req, res) => {
 
 // update task order
 router.put(routes.put.updateOrder, async (req, res) => {
-    const promises = req.body.map(dogOrderWithIdPair =>
+    const promises = req.body.map((dogOrderWithIdPair) =>
         Task.model.updateOne(
             { _id: dogOrderWithIdPair.id },
             { $set: { order: dogOrderWithIdPair.order } }
@@ -129,11 +130,11 @@ router.put(routes.put.updateTaskDogs, async (req, res) => {
             { _id: req.params.id },
             {
                 $set: {
-                    dogs: req.body.dogs.map(dog => ({
+                    dogs: req.body.dogs.map((dog) => ({
                         name: dog.name,
-                        _id: dog.id
-                    }))
-                }
+                        _id: dog.id,
+                    })),
+                },
             }
         );
 
@@ -149,11 +150,11 @@ router.put(routes.put.updateDogTasks, async (req, res) => {
             { _id: req.params.id },
             {
                 $set: {
-                    tasks: req.body.tasks.map(task => ({
+                    tasks: req.body.tasks.map((task) => ({
                         _id: task.id,
-                        name: task.name
-                    }))
-                }
+                        name: task.name,
+                    })),
+                },
             }
         );
 
@@ -169,11 +170,28 @@ router.put(routes.put.updatePeopleTasks, async (req, res) => {
             { _id: req.params.id },
             {
                 $set: {
-                    peopleTasks: req.body.peopleTasks.map(personTask => ({
+                    peopleTasks: req.body.peopleTasks.map((personTask) => ({
                         ...personTask,
-                        _id: personTask.id
-                    }))
-                }
+                        _id: personTask.id,
+                    })),
+                },
+            }
+        );
+
+        res.send(response).status(200);
+    } catch (error) {
+        res.send(error).status(500);
+    }
+});
+
+router.put(routes.put.updateTaskOrder, async (req, res) => {
+    try {
+        const response = await Task.model.updateOne(
+            { _id: req.params.id },
+            {
+                $set: {
+                    order: +req.body.order,
+                },
             }
         );
 
