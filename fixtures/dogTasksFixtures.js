@@ -27,6 +27,9 @@ const dogTasks = [
     },
     {
         name: 'Power jumping'
+    },
+    {
+        name: 'Crossy'
     }
 ];
 
