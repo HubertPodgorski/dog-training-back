@@ -1,8 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const PersonTask = require('../src/models/personTask');
-
-const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds149596.mlab.com:49596/dog-training`;
+const { dbUrl } = require('../src/helpers');
 
 mongoose.connect(dbUrl);
 

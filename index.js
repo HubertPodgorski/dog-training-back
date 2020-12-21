@@ -4,10 +4,7 @@ const express = require('express');
 const routers = require('./src/routes/routesIndex');
 const mongoose = require('mongoose');
 var cors = require('cors');
-
-const dbUrl = `mongodb://${process.env.DB_USER}:${
-    process.env.DB_PASS
-}@ds149596.mlab.com:49596/dog-training`;
+const { dbUrl } = require('./src/helpers');
 
 mongoose.connect(dbUrl, { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
