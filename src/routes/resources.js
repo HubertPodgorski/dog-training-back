@@ -15,15 +15,15 @@ const routes = {
     },
     delete: {
         people: '/people/:id',
-        dogTasks: '/dogTasks/:id',
+        dogTasks: '/dog-tasks/:id',
         dogs: '/dogs/:id',
-        peopleTasks: '/peopleTasks/:id',
+        peopleTasks: '/people-tasks/:id',
     },
     post: {
         people: '/people',
-        dogTasks: '/dogTasks',
+        dogTasks: '/dog-tasks',
         dogs: '/dogs',
-        peopleTasks: '/peopleTasks',
+        peopleTasks: '/people-tasks',
     },
 };
 
