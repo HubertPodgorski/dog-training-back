@@ -194,6 +194,7 @@ router.put(routes.put.updateTaskOrder, async (req, res) => {
             {
                 $set: {
                     order: +req.body.order,
+                    column: req.body.column,
                 },
             }
         );
