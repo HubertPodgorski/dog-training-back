@@ -188,14 +188,17 @@ router.put(routes.put.updatePeopleTasks, async (req, res) => {
 });
 
 router.put(routes.put.updateTaskOrder, async (req, res) => {
+    let dataToUpdate = { order: +req.body.order };
+
+    if (req.body.column) {
+        dataToUpdate.column = req.body.column;
+    }
+
     try {
         const response = await Task.model.updateOne(
             { _id: req.params.id },
             {
-                $set: {
-                    order: +req.body.order,
-                    column: req.body.column,
-                },
+                $set: dataToUpdate,
             }
         );
 
