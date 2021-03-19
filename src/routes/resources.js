@@ -4,6 +4,14 @@ const Dog = require('../models/dog');
 const DogTask = require('../models/dogTask');
 const Person = require('../models/person');
 const PersonTask = require('../models/personTask');
+const { getDogTasks } = require('../repository/dogTasks');
+const {
+    getPeople,
+    addPerson,
+    deletePersonById,
+} = require('../repository/people');
+const { getDogs } = require('../repository/dogs');
+const { getPeopleTasks } = require('../repository/peopleTasks');
 
 const routes = {
     get: {
@@ -27,114 +35,45 @@ const routes = {
     },
 };
 
-router.get(routes.get.dogs, (req, res) => {
-    Dog.model.find({}, (err, dogs) => {
-        const mappedDogs = dogs.map((dog) => ({
-            id: dog.id,
-            name: dog.name,
-        }));
+router.get(routes.get.dogs, async (req, res) => {
+    const response = await getDogs();
 
-        if (err) res.send(err).status(500);
-
-        res.send(mappedDogs).status(200);
-    });
+    res.send(response).status(200);
 });
 
-router.get(routes.get.dogTasks, (req, res) => {
-    DogTask.model.find({}, (err, dogTasks) => {
-        const mappedDogTasks = dogTasks.map((dogTask) => ({
-            id: dogTask.id,
-            name: dogTask.name,
-        }));
+router.get(routes.get.dogTasks, async (req, res) => {
+    const response = await getDogTasks();
 
-        if (err) res.send(err).status(500);
-
-        res.send(mappedDogTasks).status(200);
-    });
+    res.send(response).status(200);
 });
 
 router.get(routes.get.people, (req, res) => {
-    Person.model.find({}, (err, people) => {
-        const mappedPeople = people.map((person) => ({
-            id: person.id,
-            name: person.name,
-        }));
+    const response = getPeople();
 
-        if (err) res.send(err).status(500);
-
-        res.send(mappedPeople).status(200);
-    });
+    res.send(response).status(200);
 });
 
-router.get(routes.get.peopleTasks, (req, res) => {
-    PersonTask.model.find({}, (err, people) => {
-        const mappedPeopleTasks = people.map((person) => ({
-            id: person.id,
-            name: person.name,
-        }));
+router.get(routes.get.peopleTasks, async (req, res) => {
+    const response = await getPeopleTasks();
 
-        if (err) res.send(err).status(500);
-
-        res.send(mappedPeopleTasks).status(200);
-    });
+    res.send(response).status(200);
 });
 
 router.get(routes.get.all, async (req, res) => {
-    let allResources = {
-        dogs: [],
-        dogTasks: [],
-        people: [],
-        peopleTasks: [],
-    };
+    const dogs = await getDogs();
+    const dogTasks = await getDogTasks();
+    const people = await getPeople();
+    const peopleTasks = await getPeopleTasks();
 
-    await Dog.model.find({}, (err, dogs) => {
-        const mappedDogs = dogs.map((dog) => ({
-            id: dog.id,
-            name: dog.name,
-        }));
-
-        if (err) res.send(err).status(500);
-
-        allResources.dogs = mappedDogs;
-    });
-
-    await DogTask.model.find({}, (err, dogTasks) => {
-        const mappedDogTasks = dogTasks.map((dogTask) => ({
-            id: dogTask.id,
-            name: dogTask.name,
-        }));
-
-        if (err) res.send(err).status(500);
-
-        allResources.dogTasks = mappedDogTasks;
-    });
-
-    await Person.model.find({}, (err, people) => {
-        const mappedPeople = people.map((person) => ({
-            id: person.id,
-            name: person.name,
-        }));
-
-        if (err) res.send(err).status(500);
-
-        allResources.people = mappedPeople;
-    });
-
-    await PersonTask.model.find({}, (err, people) => {
-        const mappedPeopleTasks = people.map((person) => ({
-            id: person.id,
-            name: person.name,
-        }));
-
-        if (err) res.send(err).status(500);
-
-        allResources.peopleTasks = mappedPeopleTasks;
-    });
-
-    res.send(allResources).status(200);
+    res.send({
+        dogs,
+        dogTasks,
+        people,
+        peopleTasks,
+    }).status(200);
 });
 
-router.delete(routes.delete.people, (req, res) => {
+router.delete(routes.delete.people, async (req, res) => {
     try {
         Person.model.deleteOne({ _id: req.params.id }, (callback) => {
             if (callback) {
@@ -146,6 +85,12 @@ router.delete(routes.delete.people, (req, res) => {
     } catch (error) {
         res.send(error).status(500);
     }
+
+    res.send({}).status(200);
+
+    // await deletePersonById(req.params.id)();
+    //
+    // res.send({}).status(200);
 });
 
 router.delete(routes.delete.dogs, (req, res) => {
@@ -190,12 +135,9 @@ router.delete(routes.delete.dogTasks, (req, res) => {
     }
 });
 
-router.post(routes.post.people, (req, res) => {
+router.post(routes.post.people, async (req, res) => {
     try {
-        const { name } = req.body;
-        const response = Person.model.create({
-            name: name || '',
-        });
+        const response = await addPerson(req.body.name || '')();
 
         res.send(response).status(200);
     } catch (error) {

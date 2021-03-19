@@ -7,8 +7,8 @@ const DogTaskSchema = new Schema({
         type: String,
         required: [true, 'Dog task name field is required'],
         unique: true,
-        dropDups: true
-    }
+        dropDups: true,
+    },
 });
 
 const DogTask = mongoose.model('dogTask', DogTaskSchema);
